@@ -1,17 +1,20 @@
 package ie.revenue.isisdemo.customers;
 
-import java.util.List;
-
 import ie.revenue.isisdemo.corresp.CorrespondenceHistory;
 import ie.revenue.isisdemo.custprofile.CustomerName;
 import ie.revenue.isisdemo.custprofile.CustomerProfile;
 import ie.revenue.isisdemo.custprofile.CustomerTitle;
 import ie.revenue.isisdemo.custprofile.Language;
+import ie.revenue.isisdemo.taxrecord.CustomerTaxCredit;
+import ie.revenue.isisdemo.taxrecord.CustomerTaxRecord;
+import ie.revenue.isisdemo.taxrecord.CustomerTaxRecords;
 import ie.revenue.isisdemo.taxrecord.CustomerTaxYear;
+import ie.revenue.isisdemo.taxrecord.TaxCreditEligibility;
 import ie.revenue.isisdemo.taxrecord.TaxCreditRate;
 import ie.revenue.isisdemo.taxrecord.TaxCreditType;
-import ie.revenue.isisdemo.taxrecord.TaxRecord;
 import ie.revenue.isisdemo.taxrecord.TaxYear;
+
+import java.util.List;
 
 import org.apache.isis.applib.fixtures.AbstractFixture;
 import org.apache.isis.applib.value.Date;
@@ -36,46 +39,96 @@ public abstract class AbstractCustomerFixture extends AbstractFixture {
 		customer.setCredentials(credentials);
 		credentials.setCustomer(customer);
 
-		// profile, name
-		CustomerProfile profile = newTransientInstance(CustomerProfile.class);
-		customer.setProfile(profile);
-		profile.setCustomer(customer);
-
-		CustomerName name = newTransientInstance(CustomerName.class);
-		profile.setName(name);
-		name.setFirstName(firstName);
-		name.setSurname(surname);
-		name.setTitle(customerTitle);
-
-		// requests history
-		CorrespondenceHistory requestsHistory = newTransientInstance(CorrespondenceHistory.class);
-		requestsHistory.setCustomer(customer);
-		customer.setCorrespondenceHistory(requestsHistory);
-
-		// tax record
-		TaxRecord taxRecord = newTransientInstance(TaxRecord.class);
-		taxRecord.setCustomer(customer);
-		customer.setTaxRecord(taxRecord);
-
 		getContainer().persist(customer);
+
+		createCustomerProfile(customer, customerTitle, firstName, surname);
+		createCorrespondenceHistory(customer);
+		createTaxRecordAndCustomerTaxYears(customer);
 		
 		return customer;
 	}
 
-	protected void addCustomerTaxCredit(Customer customer, int year,
-			String taxCreditTypeCode) {
-		TaxRecord taxRecord = customer.getTaxRecord();
-		CustomerTaxYear cty = newTransientInstance(CustomerTaxYear.class);
-		cty.setTaxRecord(taxRecord);
+
+	private void createCustomerProfile(Customer customer,
+			CustomerTitle customerTitle, String firstName, String surname) {
+		// profile, name
+		CustomerProfile profile = newTransientInstance(CustomerProfile.class);
+		profile.setCustomer(customer);
+
+		CustomerName name = newTransientInstance(CustomerName.class);
+		profile.setName(name);
+		name.setProfile(profile);
+		name.setFirstName(firstName);
+		name.setSurname(surname);
+		name.setTitle(customerTitle);
 		
-		List<CustomerTaxYear> taxYears = taxRecord.getTaxYears();
-		cty.setTaxCreditRate(taxCreditRateFor(year, taxCreditTypeCode));
-		taxYears.add(cty);
-		getContainer().persist(cty);
+		
+		getContainer().persist(profile);
+	}
+
+	private void createCorrespondenceHistory(Customer customer) {
+		CorrespondenceHistory correspondenceHistory = newTransientInstance(CorrespondenceHistory.class);
+		correspondenceHistory.setCustomer(customer);
+
+		getContainer().persist(correspondenceHistory);
+	}
+
+	private void createTaxRecordAndCustomerTaxYears(Customer customer) {
+		// tax record
+		CustomerTaxRecord taxRecord = newTransientInstance(CustomerTaxRecord.class);
+		taxRecord.setCustomer(customer);
+
+		// tax years
+		List<TaxYear> taxYears = getContainer().allInstances(TaxYear.class);
+		for (TaxYear taxYear : taxYears) {
+			CustomerTaxYear cty = newTransientInstance(CustomerTaxYear.class);
+			cty.setTaxRecord(taxRecord);
+			cty.setTaxYear(taxYear);
+		}
+		
+		getContainer().persist(taxRecord);
+	}
+
+	protected void addCustomerTaxCredit(Customer customer, int year,
+			String taxCreditTypeCode, TaxCreditEligibility eligibility) {
+		CustomerTaxRecord taxRecord = customerTaxRecords.taxRecordFor(customer);
+		CustomerTaxYear cty = taxRecord.taxYearFor(year);
+		
+		CustomerTaxCredit ctc = newTransientInstance(CustomerTaxCredit.class);
+		ctc.setCustomerTaxYear(cty);
+		ctc.setTaxCreditRate(taxCreditRateFor(year, taxCreditTypeCode));
+		
+		ctc.setEligibility(eligibility);
+		getContainer().persist(ctc);
 	}
 
 	private TaxCreditRate taxCreditRateFor(int year, String taxCreditTypeCode) {
-		return TaxCreditRate.lookup(TaxYear.lookup(year, getContainer()), TaxCreditType.lookup(taxCreditTypeCode, getContainer()), getContainer());
+		TaxCreditType tct = TaxCreditType.lookup(taxCreditTypeCode, getContainer());
+		TaxYear ty = TaxYear.lookup(year, getContainer());
+		return TaxCreditRate.lookup(ty, tct, getContainer());
 	}
+
+	
+	// {{ injected: Customers
+	private Customers customers;
+	public Customers getCustomers() {
+		return customers;
+	}
+	public void setCustomers(final Customers customers) {
+		this.customers = customers;
+	}
+	// }}
+
+
+	// {{ injected: CustomerTaxRecords
+	private CustomerTaxRecords customerTaxRecords;
+	public CustomerTaxRecords getCustomerTaxRecords() {
+		return customerTaxRecords;
+	}
+	public void setCustomerTaxRecords(final CustomerTaxRecords taxRecords) {
+		this.customerTaxRecords = taxRecords;
+	}
+	// }}
+
 
 }

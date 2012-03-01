@@ -2,6 +2,7 @@ package ie.revenue.isisdemo.corresp;
 
 import ie.revenue.isisdemo.corresp.incoming.IncomingCorrespondence;
 import ie.revenue.isisdemo.customers.Customer;
+import ie.revenue.isisdemo.customers.ReferencesCustomer;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.util.TitleBuffer;
 
-public class CorrespondenceHistory extends AbstractDomainObject {
+public class CorrespondenceHistory extends AbstractDomainObject implements ReferencesCustomer {
 
 	// {{ Identification
 	public String title() {
@@ -43,7 +44,7 @@ public class CorrespondenceHistory extends AbstractDomainObject {
 	// {{ Pending (Collection)
 	@MemberOrder(sequence = "3")
 	public List<IncomingCorrespondence> getPending() {
-		return mailbox.pending(getCustomer());
+		return mailbox.pendingCorrespondence(getCustomer());
 	}
 	// }}
 
@@ -54,5 +55,7 @@ public class CorrespondenceHistory extends AbstractDomainObject {
 		this.mailbox = mailbox;
 	}
 	// }}
+
+	
 	
 }

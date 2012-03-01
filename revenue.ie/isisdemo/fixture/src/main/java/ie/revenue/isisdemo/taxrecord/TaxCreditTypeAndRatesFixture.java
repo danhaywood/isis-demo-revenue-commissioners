@@ -10,7 +10,6 @@ import org.apache.isis.applib.fixtures.AbstractFixture;
 
 public class TaxCreditTypeAndRatesFixture extends AbstractFixture {
 
-
 	@Override
 	public void install() {
 		createTaxCreditType("PAYE", "PAYE Tax Credit", null, 3360);

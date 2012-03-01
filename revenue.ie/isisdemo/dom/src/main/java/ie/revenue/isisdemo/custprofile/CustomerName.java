@@ -1,12 +1,12 @@
 package ie.revenue.isisdemo.custprofile;
 
 import org.apache.isis.applib.AbstractDomainObject;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
 
 public class CustomerName extends AbstractDomainObject {
-
 
 	// {{ Title (property)
 	private CustomerTitle title;
@@ -19,14 +19,15 @@ public class CustomerName extends AbstractDomainObject {
 
 	public void setTitle(final CustomerTitle title) {
 		this.title = title;
+		nameUpdated();
 	}
-	// }}
 
+	// }}
 
 	// {{ Surname (property)
 	private String surname;
 
-	@Title(sequence="1", append=", ")
+	@Title(sequence = "1", append = ", ")
 	@MemberOrder(sequence = "2")
 	public String getSurname() {
 		return surname;
@@ -34,13 +35,15 @@ public class CustomerName extends AbstractDomainObject {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
+		nameUpdated();
 	}
+
 	// }}
 
 	// {{ FirstName (property)
 	private String firstName;
 
-	@Title(sequence="2")
+	@Title(sequence = "2")
 	@MemberOrder(sequence = "3")
 	public String getFirstName() {
 		return firstName;
@@ -48,14 +51,16 @@ public class CustomerName extends AbstractDomainObject {
 
 	public void setFirstName(final String firstName) {
 		this.firstName = firstName;
+		nameUpdated();
 	}
+
 	// }}
-	
+
 	// {{ MiddleInitial (property)
 	private String middleInitial;
 
 	@Optional
-	@Title(sequence="3", append=".")
+	@Title(sequence = "3", append = ".")
 	@MemberOrder(sequence = "4")
 	public String getMiddleInitial() {
 		return middleInitial;
@@ -63,15 +68,32 @@ public class CustomerName extends AbstractDomainObject {
 
 	public void setMiddleInitial(final String middleInitial) {
 		this.middleInitial = middleInitial;
+		nameUpdated();
+	}
+
+	// }}
+
+	// {{ Profile (hidden property)
+	private CustomerProfile profile;
+
+	@Hidden
+	public CustomerProfile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(final CustomerProfile profile) {
+		this.profile = profile;
+	}
+
+	// }}
+
+	// {{ helpers
+	private void nameUpdated() {
+		if (getProfile() == null) {
+			return;
+		}
+		getProfile().nameUpdated(getContainer().titleOf(this));
 	}
 	// }}
 
-
-
-
-	
-
-	
-
-	
 }

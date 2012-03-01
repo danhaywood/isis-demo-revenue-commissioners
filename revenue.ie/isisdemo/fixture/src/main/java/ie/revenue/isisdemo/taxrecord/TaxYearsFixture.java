@@ -4,7 +4,7 @@ import ie.revenue.isisdemo.taxrecord.TaxYear;
 
 import org.apache.isis.applib.fixtures.AbstractFixture;
 
-public class TaxYearFixture extends AbstractFixture {
+public class TaxYearsFixture extends AbstractFixture {
 
 
 	@Override

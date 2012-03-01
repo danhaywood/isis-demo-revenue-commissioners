@@ -57,6 +57,19 @@ public class CustomerTaxCredit extends AbstractDomainObject {
 	}
 	// }}
 
+	// {{ Claimed (property)
+	private Boolean claimed;
+
+	@Disabled
+	@MemberOrder(sequence = "4")
+	public Boolean isClaimed() {
+		return claimed;
+	}
+
+	public void setClaimed(final boolean claimed) {
+		this.claimed = claimed;
+	}
+	// }}
 
 
 }

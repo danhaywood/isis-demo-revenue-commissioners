@@ -13,8 +13,12 @@ import org.apache.isis.applib.annotation.Named;
 @Named("Mailbox")
 public interface Mailbox {
 
-	List<IncomingCorrespondence> pending(Customer customer);
+	CorrespondenceHistory correspondenceHistoryFor(Customer customer);
 
+	@Hidden
+	List<IncomingCorrespondence> pendingCorrespondence(Customer customer);
+
+	@Hidden
 	List<Correspondence> recentCorrespondence(Customer customer);
 	
 }

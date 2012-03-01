@@ -5,8 +5,9 @@ import org.apache.isis.applib.fixtures.AbstractFixture;
 public class CustomersFixture extends AbstractFixture {
 
 	public CustomersFixture() {
-		addFixture(new MrsJaneCitizen());
-		addFixture(new MrJohnCitizen());
+		addFixture(new Customer4134484A_MrsJaneCitizen());
+		addFixture(new Customer3134478H_MrJohnCitizen());
+		addFixture(new Customer3134478H_taxCredits());
 	}
 	
 }

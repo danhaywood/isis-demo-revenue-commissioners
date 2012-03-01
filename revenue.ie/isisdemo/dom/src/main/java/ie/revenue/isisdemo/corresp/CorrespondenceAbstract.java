@@ -73,6 +73,17 @@ public class CorrespondenceAbstract implements Correspondence {
 				return t.isArchived() == archived;
 			}};
 	}
+
+	public static Filter<Correspondence> filterCorrespondenceFor(
+			final Customer customer) {
+		return new Filter<Correspondence>(){
+			
+			@Override
+			public boolean accept(Correspondence t) {
+				return t.getCustomer() == customer;
+			}};
+	}
 	// }}
+
 
 }

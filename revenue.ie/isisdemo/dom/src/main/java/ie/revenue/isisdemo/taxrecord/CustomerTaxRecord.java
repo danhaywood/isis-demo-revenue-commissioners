@@ -1,18 +1,20 @@
 package ie.revenue.isisdemo.taxrecord;
 
+import ie.revenue.isisdemo.customers.Customer;
+import ie.revenue.isisdemo.customers.ReferencesCustomer;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import ie.revenue.isisdemo.customers.Customer;
-
 import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.Disabled;
+import org.apache.isis.applib.annotation.Ignore;
 import org.apache.isis.applib.annotation.Immutable;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.util.TitleBuffer;
 
 @Immutable
-public class TaxRecord extends AbstractDomainObject {
+public class CustomerTaxRecord extends AbstractDomainObject implements ReferencesCustomer {
 
 	// {{ Identification
 	public String title() {
@@ -58,6 +60,18 @@ public class TaxRecord extends AbstractDomainObject {
 
 	public void setTaxYears(final List<CustomerTaxYear> taxYears) {
 		this.taxYears = taxYears;
+	}
+	// }}
+
+	// programmatic
+	@Ignore
+	public CustomerTaxYear taxYearFor(int year) {
+		for (CustomerTaxYear taxYear : getTaxYears()) {
+			if(taxYear.getTaxYear().getYear() == year) {
+				return taxYear;
+			}
+		}
+		return null;
 	}
 	// }}
 	

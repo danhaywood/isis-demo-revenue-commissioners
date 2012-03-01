@@ -5,7 +5,7 @@ import ie.revenue.isisdemo.custprofile.Language;
 
 import org.apache.isis.applib.value.Date;
 
-public class MrsJaneCitizen extends AbstractCustomerFixture {
+public class Customer4134484A_MrsJaneCitizen extends AbstractCustomerFixture {
 
 	@Override
 	public void install() {

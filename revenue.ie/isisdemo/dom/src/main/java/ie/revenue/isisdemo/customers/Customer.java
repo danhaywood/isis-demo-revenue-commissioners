@@ -1,18 +1,12 @@
 package ie.revenue.isisdemo.customers;
 
-import ie.revenue.isisdemo.corresp.Correspondence;
-import ie.revenue.isisdemo.corresp.CorrespondenceHistory;
-import ie.revenue.isisdemo.corresp.incoming.IncomingCorrespondence;
-import ie.revenue.isisdemo.custprofile.CustomerName;
-import ie.revenue.isisdemo.custprofile.CustomerProfile;
-import ie.revenue.isisdemo.taxrecord.TaxRecord;
-
 import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.Disabled;
-import org.apache.isis.applib.annotation.Ignore;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
+
+import com.google.common.base.Objects;
 
 public class Customer extends AbstractDomainObject {
 
@@ -31,14 +25,19 @@ public class Customer extends AbstractDomainObject {
 	}
 	// }}
 	
-	// {{ Name (derived property)
+	// {{ Name (derived, maintained property)
+	private String name;
 
 	@Title(sequence = "2")
 	@MemberOrder(sequence = "2")
-	public CustomerName getName() {
-		return getProfile().getName();
+	public String getName() {
+		return name;
+	}
+	public void setName(final String name) {
+		this.name = name;
 	}
 	// }}
+
 
 	// {{ Credentials (property)
 	private CustomerCredentials credentials;
@@ -54,58 +53,30 @@ public class Customer extends AbstractDomainObject {
 	}
 	// }}
 
-	// {{ Profile (property)
-	private CustomerProfile profile;
-
-	@Disabled
-	@MemberOrder(sequence = "4")
-	public CustomerProfile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(final CustomerProfile profile) {
-		this.profile = profile;
-	}
-	// }}
-
-	// {{ TaxRecord (property)
-	private TaxRecord taxRecord;
-
-	@Disabled
-	@MemberOrder(sequence = "5")
-	public TaxRecord getTaxRecord() {
-		return taxRecord;
-	}
-
-	public void setTaxRecord(final TaxRecord taxRecord) {
-		this.taxRecord = taxRecord;
-	}
-	// }}
-
-	// {{ CorrespondenceHistory (property)
-	private CorrespondenceHistory correspondenceHistory;
-
-	@Disabled
-	@MemberOrder(sequence = "6")
-	public CorrespondenceHistory getCorrespondenceHistory() {
-		return correspondenceHistory;
-	}
-
-	public void setCorrespondenceHistory(final CorrespondenceHistory requestsHistory) {
-		this.correspondenceHistory = requestsHistory;
-	}
-	// }}
-
-	// {{ filters (programmatic)
-	@Ignore
-	public Filter<Correspondence> filterCorrespondence() {
-		return new Filter<Correspondence>(){
 	
+	// {{ programmatic: filter
+	public static <T extends ReferencesCustomer> Filter<T> filterTo(final Customer customer) {
+		return new Filter<T>() {
+
 			@Override
-			public boolean accept(Correspondence t) {
-				return t.getCustomer() == Customer.this;
-			}};
+			public boolean accept(final T candidate) {
+				String candidatePpsn = candidate.getCustomer().getPpsn();
+				String ppsn = customer.getPpsn();
+				return Objects.equal(ppsn, candidatePpsn);
+			}
+		};
 	}
 	// }}
+
+	public static Filter<Customer> filterByPpsn(final String ppsn) {
+		return new Filter<Customer>() {
+
+			@Override
+			public boolean accept(Customer t) {
+				return Objects.equal(t.getPpsn(), ppsn);
+			}
+		};
+	}
+
 	
 }

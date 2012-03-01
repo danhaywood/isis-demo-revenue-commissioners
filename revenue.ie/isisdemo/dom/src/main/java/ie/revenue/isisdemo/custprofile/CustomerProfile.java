@@ -1,9 +1,11 @@
 package ie.revenue.isisdemo.custprofile;
 
 import ie.revenue.isisdemo.customers.Customer;
+import ie.revenue.isisdemo.customers.ReferencesCustomer;
 
 import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.Disabled;
+import org.apache.isis.applib.annotation.Ignore;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.RegEx;
@@ -11,13 +13,13 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.util.TitleBuffer;
 import org.apache.isis.applib.value.Date;
 
-public class CustomerProfile extends AbstractDomainObject {
+public class CustomerProfile extends AbstractDomainObject implements ReferencesCustomer {
 
 	// {{ Identification
 	public String title() {
 		TitleBuffer buf = new TitleBuffer();
 		buf.append(getCustomer().getPpsn());
-		buf.append(" (correspondence profile)");
+		buf.append(" (customer profile)");
 		return buf.toString();
 	}
 	// }}
@@ -161,4 +163,11 @@ public class CustomerProfile extends AbstractDomainObject {
 	}
 	// }}
 
+	// {{ programmatic helpers
+	@Ignore
+	void nameUpdated(String newName) {
+		getCustomer().setName(newName);
+	}
+	// }}
+	
 }

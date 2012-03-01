@@ -41,15 +41,20 @@ public class MailboxDefault extends AbstractFactoryAndRepository implements Mail
     // }}
     
 	@Override
-	public List<IncomingCorrespondence> pending(final Customer customer) {
+	public List<IncomingCorrespondence> pendingCorrespondence(final Customer customer) {
 		return allMatches(IncomingCorrespondence.class, 
-				Filters.and(customer.filterCorrespondence(), IncomingCorrespondence.filterPendingAs(true)));
+				Filters.and(CorrespondenceAbstract.filterCorrespondenceFor(customer), IncomingCorrespondence.filterPendingAs(true)));
 	}
 
 	@Override
 	public List<Correspondence> recentCorrespondence(Customer customer) {
 		return allMatches(Correspondence.class, 
-				Filters.and(customer.filterCorrespondence(), CorrespondenceAbstract.filterArchivedAs(true)));
+				Filters.and(CorrespondenceAbstract.filterCorrespondenceFor(customer), CorrespondenceAbstract.filterArchivedAs(true)));
+	}
+
+	@Override
+	public CorrespondenceHistory correspondenceHistoryFor(Customer customer) {
+		return firstMatch(CorrespondenceHistory.class, Customer.<CorrespondenceHistory>filterTo(customer));
 	}
 
 }

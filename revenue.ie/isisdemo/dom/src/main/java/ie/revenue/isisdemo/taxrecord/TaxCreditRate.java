@@ -61,7 +61,7 @@ public class TaxCreditRate extends AbstractDomainObject {
 		return new Filter<TaxCreditRate>(){
 			@Override
 			public boolean accept(TaxCreditRate t) {
-				return t.getTaxYear() == customerTaxYear.getTaxCreditRate().getTaxYear();
+				return t.getTaxYear() == customerTaxYear.getTaxYear();
 			}
 		};
 	}

@@ -19,9 +19,6 @@
 
 package ie.revenue.isisdemo.customers;
 
-import ie.revenue.isisdemo.customers.Customer;
-import ie.revenue.isisdemo.customers.Customers;
-
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -39,7 +36,13 @@ public class CustomersDefault extends AbstractFactoryAndRepository implements Cu
         return "Customers";
     }
     // }}
-    
+
+	// {{ findByPpsn
+	@Override
+	public Customer findByPpsn(final String ppsn) {
+		return firstMatch(Customer.class, Customer.filterByPpsn(ppsn));
+	}
+	// }}
     
     // {{ listAll (exploration action)
 	@MemberOrder(sequence = "1")

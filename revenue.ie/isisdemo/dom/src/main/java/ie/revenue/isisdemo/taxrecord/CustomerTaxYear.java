@@ -16,38 +16,40 @@ public class CustomerTaxYear extends AbstractDomainObject {
 		final TitleBuffer buf = new TitleBuffer();
 		buf.append(getTaxRecord().getCustomer().getPpsn());
 		buf.append(": ");
-		buf.append(getContainer().titleOf(getTaxCreditRate()));
+		buf.append(getContainer().titleOf(getTaxYear()));
 		return buf.toString();
 	}
 	// }}
 
 	// {{ TaxRecord (property)
-	private TaxRecord taxRecord;
+	private CustomerTaxRecord taxRecord;
 
 	@Disabled
 	@MemberOrder(sequence = "1")
-	public TaxRecord getTaxRecord() {
+	public CustomerTaxRecord getTaxRecord() {
 		return taxRecord;
 	}
 
-	public void setTaxRecord(final TaxRecord taxRecord) {
+	public void setTaxRecord(final CustomerTaxRecord taxRecord) {
 		this.taxRecord = taxRecord;
 	}
 	// }}
 
-	// {{ TaxCreditRate (property)
-	private TaxCreditRate taxCreditRate;
+
+	// {{ TaxYear (property)
+	private TaxYear taxYear;
 
 	@Disabled
 	@MemberOrder(sequence = "2")
-	public TaxCreditRate getTaxCreditRate() {
-		return taxCreditRate;
+	public TaxYear getTaxYear() {
+		return taxYear;
 	}
 
-	public void setTaxCreditRate(final TaxCreditRate taxCreditRate) {
-		this.taxCreditRate = taxCreditRate;
+	public void setTaxYear(final TaxYear taxYear) {
+		this.taxYear = taxYear;
 	}
 	// }}
+
 
 	// {{ TaxCredits (Collection)
 	private List<CustomerTaxCredit> taxCredits = new ArrayList<CustomerTaxCredit>();
