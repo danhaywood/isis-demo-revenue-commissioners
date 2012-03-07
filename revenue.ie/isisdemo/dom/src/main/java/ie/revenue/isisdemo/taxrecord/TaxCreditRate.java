@@ -26,7 +26,6 @@ public class TaxCreditRate extends AbstractDomainObject {
 	}
 	// }}
 
-	
 	// {{ Type (property)
 	private TaxCreditType type;
 
@@ -41,7 +40,6 @@ public class TaxCreditRate extends AbstractDomainObject {
 	}
 	// }}
 
-	
 	// {{ GrossReliefDue (property)
 	private Integer grossReliefDue;
 
@@ -54,14 +52,13 @@ public class TaxCreditRate extends AbstractDomainObject {
 		this.grossReliefDue = grossReliefDue;
 	}
 	// }}
-
 	
 	// {{ programmatic 
 	public static Filter<TaxCreditRate> forTaxYear(final CustomerTaxYear customerTaxYear) {
 		return new Filter<TaxCreditRate>(){
 			@Override
 			public boolean accept(TaxCreditRate t) {
-				return t.getTaxYear() == customerTaxYear.getTaxYear();
+				return Objects.equal(t.getTaxYear(), customerTaxYear.getTaxYear());
 			}
 		};
 	}

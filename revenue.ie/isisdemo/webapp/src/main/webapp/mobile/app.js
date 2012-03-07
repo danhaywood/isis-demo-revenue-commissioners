@@ -19,6 +19,6 @@ $(function() {
     var urlHref = generic.extract(locationHref);
     generic.submitAndRender(urlHref, "pop");
   } else {
-    $.mobile.changePage($("#home"))
+    $.mobile.changePage($("#home"));
   }
 });

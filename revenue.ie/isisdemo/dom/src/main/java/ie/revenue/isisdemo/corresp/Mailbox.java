@@ -1,5 +1,6 @@
 package ie.revenue.isisdemo.corresp;
 
+import ie.revenue.isisdemo.corresp.incoming.CustomerRequest;
 import ie.revenue.isisdemo.corresp.incoming.IncomingCorrespondence;
 import ie.revenue.isisdemo.customers.Customer;
 
@@ -16,9 +17,15 @@ public interface Mailbox {
 	CorrespondenceHistory correspondenceHistoryFor(Customer customer);
 
 	@Hidden
-	List<IncomingCorrespondence> pendingCorrespondence(Customer customer);
+	List<CustomerRequest> pendingCorrespondence(Customer customer);
 
 	@Hidden
-	List<Correspondence> recentCorrespondence(Customer customer);
-	
+	List<IncomingCorrespondence> currentCorrespondence(Customer customer);
+
+	@Hidden
+	List<Correspondence> archivedCorrespondence(Customer customer);
+
+	public int nextNoticeNumber();
+
+
 }

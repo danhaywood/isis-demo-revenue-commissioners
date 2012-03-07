@@ -40,7 +40,6 @@ public class TaxCreditType extends AbstractDomainObject {
 	}
 	// }}
 
-
 	// {{ HelpText (property)
 	private String helpText;
 
@@ -53,7 +52,6 @@ public class TaxCreditType extends AbstractDomainObject {
 		this.helpText = helpText;
 	}
 	// }}
-
 	
 	// {{ programmatic
 	public static TaxCreditType lookup(final String code, DomainObjectContainer container) {
@@ -69,6 +67,5 @@ public class TaxCreditType extends AbstractDomainObject {
 			}};
 	}
 	// }}
-
 	
 }

@@ -19,7 +19,7 @@ public class CustomerTaxRecordsDefault extends AbstractFactoryAndRepository impl
 
     // {{ taxRecordFor
 	@Override
-	public CustomerTaxRecord taxRecordFor(Customer customer) {
+	public CustomerTaxRecord forCustomer(Customer customer) {
 		return firstMatch(CustomerTaxRecord.class, Customer.<CustomerTaxRecord>filterTo(customer));
 	}
 	// }}

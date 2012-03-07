@@ -38,7 +38,6 @@ public class Customer extends AbstractDomainObject {
 	}
 	// }}
 
-
 	// {{ Credentials (property)
 	private CustomerCredentials credentials;
 
@@ -52,9 +51,8 @@ public class Customer extends AbstractDomainObject {
 		this.credentials = credentials;
 	}
 	// }}
-
 	
-	// {{ programmatic: filter
+	// {{ programmatic: filters
 	public static <T extends ReferencesCustomer> Filter<T> filterTo(final Customer customer) {
 		return new Filter<T>() {
 
@@ -66,7 +64,6 @@ public class Customer extends AbstractDomainObject {
 			}
 		};
 	}
-	// }}
 
 	public static Filter<Customer> filterByPpsn(final String ppsn) {
 		return new Filter<Customer>() {
@@ -77,6 +74,7 @@ public class Customer extends AbstractDomainObject {
 			}
 		};
 	}
+	// }}
 
 	
 }

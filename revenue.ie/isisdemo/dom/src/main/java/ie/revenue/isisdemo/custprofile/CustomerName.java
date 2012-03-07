@@ -56,23 +56,6 @@ public class CustomerName extends AbstractDomainObject {
 
 	// }}
 
-	// {{ MiddleInitial (property)
-	private String middleInitial;
-
-	@Optional
-	@Title(sequence = "3", append = ".")
-	@MemberOrder(sequence = "4")
-	public String getMiddleInitial() {
-		return middleInitial;
-	}
-
-	public void setMiddleInitial(final String middleInitial) {
-		this.middleInitial = middleInitial;
-		nameUpdated();
-	}
-
-	// }}
-
 	// {{ Profile (hidden property)
 	private CustomerProfile profile;
 

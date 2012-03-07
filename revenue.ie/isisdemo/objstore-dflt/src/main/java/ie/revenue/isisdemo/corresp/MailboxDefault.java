@@ -19,6 +19,7 @@
 
 package ie.revenue.isisdemo.corresp;
 
+import ie.revenue.isisdemo.corresp.incoming.CustomerRequest;
 import ie.revenue.isisdemo.corresp.incoming.IncomingCorrespondence;
 import ie.revenue.isisdemo.customers.Customer;
 
@@ -40,21 +41,37 @@ public class MailboxDefault extends AbstractFactoryAndRepository implements Mail
     }
     // }}
     
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<IncomingCorrespondence> pendingCorrespondence(final Customer customer) {
-		return allMatches(IncomingCorrespondence.class, 
-				Filters.and(CorrespondenceAbstract.filterCorrespondenceFor(customer), IncomingCorrespondence.filterPendingAs(true)));
+	public List<CustomerRequest> pendingCorrespondence(final Customer customer) {
+		return allMatches(CustomerRequest.class, 
+				Filters.and(CorrespondenceAbstract.<IncomingCorrespondence>filterCorrespondenceFor(customer), IncomingCorrespondence.filterPendingAs(true)));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Correspondence> recentCorrespondence(Customer customer) {
+	public List<IncomingCorrespondence> currentCorrespondence(Customer customer) {
+		return allMatches(IncomingCorrespondence.class, 
+				Filters.and(CorrespondenceAbstract.<IncomingCorrespondence>filterCorrespondenceFor(customer), IncomingCorrespondence.filterPendingAs(false), CorrespondenceAbstract.<IncomingCorrespondence>filterArchivedAs(false)));
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Correspondence> archivedCorrespondence(Customer customer) {
 		return allMatches(Correspondence.class, 
-				Filters.and(CorrespondenceAbstract.filterCorrespondenceFor(customer), CorrespondenceAbstract.filterArchivedAs(true)));
+				Filters.and(CorrespondenceAbstract.<Correspondence>filterCorrespondenceFor(customer), CorrespondenceAbstract.<Correspondence>filterArchivedAs(true)));
 	}
 
 	@Override
 	public CorrespondenceHistory correspondenceHistoryFor(Customer customer) {
 		return firstMatch(CorrespondenceHistory.class, Customer.<CorrespondenceHistory>filterTo(customer));
+	}
+
+	private int maxNoticeNumber = 0;
+	@Override
+	public int nextNoticeNumber() {
+		return ++maxNoticeNumber;
 	}
 
 }

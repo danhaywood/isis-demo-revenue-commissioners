@@ -169,5 +169,6 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 		getCustomer().setName(newName);
 	}
 	// }}
-	
+
+
 }

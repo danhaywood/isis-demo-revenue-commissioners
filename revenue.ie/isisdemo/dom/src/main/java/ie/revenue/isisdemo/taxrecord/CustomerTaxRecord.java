@@ -3,15 +3,18 @@ package ie.revenue.isisdemo.taxrecord;
 import ie.revenue.isisdemo.customers.Customer;
 import ie.revenue.isisdemo.customers.ReferencesCustomer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
 
 import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Ignore;
 import org.apache.isis.applib.annotation.Immutable;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.clock.Clock;
 import org.apache.isis.applib.util.TitleBuffer;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 
 @Immutable
 public class CustomerTaxRecord extends AbstractDomainObject implements ReferencesCustomer {
@@ -40,35 +43,43 @@ public class CustomerTaxRecord extends AbstractDomainObject implements Reference
 	// }}
 
 	// {{ CurrentTaxYear (derived property)
-
 	@MemberOrder(sequence = "2")
 	public CustomerTaxYear getCurrentTaxYear() {
-		List<CustomerTaxYear> taxYears = getTaxYears();
-		return taxYears.isEmpty()?null:taxYears.get(0);
+		final int currentYear = Clock.getTimeAsDateTime().getYear();
+		for (CustomerTaxYear cty : getTaxYears()) {
+			if(cty.getTaxYear().getYear() == currentYear) {
+				return cty;
+			}
+		}
+		return null;
 	}
 	// }}
 
-	
 	// {{ TaxYears (Collection)
-	private List<CustomerTaxYear> taxYears = new ArrayList<CustomerTaxYear>();
+	private SortedSet<CustomerTaxYear> taxYears = Sets.newTreeSet(new CustomerTaxYear.MostRecentFirstComparator());
 
 	@Disabled
 	@MemberOrder(sequence = "3")
-	public List<CustomerTaxYear> getTaxYears() {
+	public SortedSet<CustomerTaxYear> getTaxYears() {
 		return taxYears;
 	}
 
-	public void setTaxYears(final List<CustomerTaxYear> taxYears) {
+	public void setTaxYears(final SortedSet<CustomerTaxYear> taxYears) {
 		this.taxYears = taxYears;
 	}
 	// }}
 
-	// programmatic
+	// {{ programmatic
 	@Ignore
 	public CustomerTaxYear taxYearFor(int year) {
-		for (CustomerTaxYear taxYear : getTaxYears()) {
-			if(taxYear.getTaxYear().getYear() == year) {
-				return taxYear;
+		TaxYear taxYear = TaxYear.lookup(year, getContainer());
+		return taxYearFor(taxYear);
+	}
+	@Ignore
+	public CustomerTaxYear taxYearFor(TaxYear taxYear) {
+		for (CustomerTaxYear cty : getTaxYears()) {
+			if(Objects.equal(cty.getTaxYear(), taxYear)) {
+				return cty;
 			}
 		}
 		return null;

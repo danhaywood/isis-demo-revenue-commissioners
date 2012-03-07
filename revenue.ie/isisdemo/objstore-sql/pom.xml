@@ -87,13 +87,13 @@
               -D version=10.0               \
               -D packaging=jar              \
               -D file=/path/to/iijdbc.jar 
-         - 
+         -
+         -->
         <dependency>
             <groupId>com.ingres</groupId>
             <artifactId>iijdbc</artifactId>
             <version>10.0</version>
         </dependency>
-         -->
 		
 	</dependencies>
 

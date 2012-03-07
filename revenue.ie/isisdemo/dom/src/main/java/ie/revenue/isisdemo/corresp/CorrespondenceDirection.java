@@ -9,10 +9,10 @@ public enum CorrespondenceDirection {
 	 * {@link Correspondence} whose {@link Correspondence#getType() type} is incoming
 	 * will be of subtype {@link IncomingCorrespondence}.
 	 */
-	INCOMING,
+	Incoming,
 	/**
 	 * {@link Correspondence} whose {@link Correspondence#getType() type} is incoming
 	 * will be of subtype {@link OutgoingCorrespondence}.
 	 */
-	OUTGOING
+	Outgoing 
 }

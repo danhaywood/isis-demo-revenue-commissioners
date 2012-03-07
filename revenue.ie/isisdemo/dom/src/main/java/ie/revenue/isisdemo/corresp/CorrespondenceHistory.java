@@ -1,5 +1,6 @@
 package ie.revenue.isisdemo.corresp;
 
+import ie.revenue.isisdemo.corresp.incoming.CustomerRequest;
 import ie.revenue.isisdemo.corresp.incoming.IncomingCorrespondence;
 import ie.revenue.isisdemo.customers.Customer;
 import ie.revenue.isisdemo.customers.ReferencesCustomer;
@@ -7,7 +8,9 @@ import ie.revenue.isisdemo.customers.ReferencesCustomer;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractDomainObject;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.util.TitleBuffer;
 
 public class CorrespondenceHistory extends AbstractDomainObject implements ReferencesCustomer {
@@ -34,17 +37,30 @@ public class CorrespondenceHistory extends AbstractDomainObject implements Refer
 	}
 	// }}
 
-	// {{ RecentCorrespondence (Collection)
+	// {{ Pending (derived Collection)
+	@NotPersisted
+	@Disabled
 	@MemberOrder(sequence = "2")
-	public List<Correspondence> getRecentCorrespondence() {
-		return mailbox.recentCorrespondence(getCustomer());
+	public List<CustomerRequest> getPending() {
+		return mailbox.pendingCorrespondence(getCustomer());
 	}
 	// }}
 
-	// {{ Pending (Collection)
+	// {{ CurrentCorrespondence (derived collection)
+	@NotPersisted
+	@Disabled
 	@MemberOrder(sequence = "3")
-	public List<IncomingCorrespondence> getPending() {
-		return mailbox.pendingCorrespondence(getCustomer());
+	public List<IncomingCorrespondence> getCurrentCorrespondence() {
+		return mailbox.currentCorrespondence(getCustomer());
+	}
+	// }}
+
+	// {{ ArchivedCorrespondence (derived collection)
+	@NotPersisted
+	@Disabled
+	@MemberOrder(sequence = "4")
+	public List<Correspondence> getArchivedCorrespondence() {
+		return mailbox.archivedCorrespondence(getCustomer());
 	}
 	// }}
 

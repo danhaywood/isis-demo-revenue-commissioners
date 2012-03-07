@@ -26,13 +26,6 @@ public class TaxYear extends AbstractDomainObject implements Comparable<TaxYear>
 	}
 	// }}
 	
-	// {{ comparable
-	@Override
-	public int compareTo(TaxYear taxYear) {
-		return year.compareTo(taxYear.year);
-	}
-	// }}
-
 	// {{ programmatic
 	public static TaxYear lookup(int year, DomainObjectContainer container) {
 		return container.firstMatch(TaxYear.class, filterYear(year));
@@ -48,5 +41,13 @@ public class TaxYear extends AbstractDomainObject implements Comparable<TaxYear>
 		};
 	}
 	// }}
-	
+
+	// {{ comparable
+	@Override
+	public int compareTo(TaxYear taxYear) {
+		return getYear().compareTo(taxYear.getYear());
+	}
+	// }}
+
+
 }

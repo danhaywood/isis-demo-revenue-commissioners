@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local-project language="java" version="3.5.1527" flavor="j2se">
+  <property name="hide-externals" value="true" />
+  <property name="show-needs-to-compile" value="false" />
+  <property name="root-file" value="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo" />
+  <property name="detail-mode" value="true" />
+  <property name="project-type" value="eclipse_workspace" />
+  <property name="hide-deprecated" value="false" />
+  <classpath>
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\dom\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\fixture\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-dflt\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-mongodb\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-sql\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\tests-bdd\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\tests-junit\target\classes" />
+    <classpathentry kind="lib" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\webapp\target\classes" />
+  </classpath>
+  <transformations>
+    <transformation in="*" out="{jar}.*" />
+  </transformations>
+  <restructuring>
+    <set version="1" name="Sandbox 1" hiview="Codemap" active="true" todo="false" />
+    <set version="1" name="Flattened to classes" hiview="Codemap" active="false" todo="false">
+      <action type="flatten" active="true" description="Flatten root">
+        <params flattenLeafFolders="true">
+          <container-fqn fqn="root" type="root" path="" isroot="true" />
+        </params>
+        <composite-set />
+      </action>
+    </set>
+    <set version="1" name="Flattened to leaf packages" hiview="Codemap" active="false" todo="false">
+      <action type="flatten" active="true" description="Flatten root">
+        <params flattenLeafFolders="false">
+          <container-fqn fqn="root" type="root" path="" isroot="true" />
+        </params>
+        <composite-set />
+      </action>
+    </set>
+  </restructuring>
+  <sourcepaths>
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\dom\src\main\resources" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\fixture\src\main\java" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-dflt\src\main\java" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-mongodb\src\main\java" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\objstore-sql\src\main\java" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\tests-bdd\src\test\resources" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\tests-junit\src\test\java" />
+    <pathentry type="file" path="D:\GITHUB\apacheisisdemo\revenue.ie\isisdemo\webapp\src\main\resources" />
+  </sourcepaths>
+</local-project>
+

@@ -4,36 +4,38 @@ import ie.revenue.isisdemo.customers.Customer;
 
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
 
 
 public class CorrespondenceAbstract implements Correspondence {
 
-	// {{ Customer (property)
-	private Customer customer;
+	// {{ CorrespondenceHistory (property)
+	private CorrespondenceHistory correspondenceHistory;
 
 	@Disabled
 	@MemberOrder(sequence = "1")
-	public Customer getCustomer() {
-		return customer;
+	public CorrespondenceHistory getCorrespondenceHistory() {
+		return correspondenceHistory;
 	}
 
-	public void setCustomer(final Customer customer) {
-		this.customer = customer;
+	public void setCorrespondenceHistory(final CorrespondenceHistory correspondenceHistory) {
+		this.correspondenceHistory = correspondenceHistory;
 	}
 	// }}
 
 	// {{ NoticeNumber (property)
-	private String noticeNumber;
+	private int noticeNumber;
 
 	@Override
+	@Title
 	@Disabled
 	@MemberOrder(sequence = "1")
-	public String getNoticeNumber() {
+	public int getNoticeNumber() {
 		return noticeNumber;
 	}
 
-	public void setNoticeNumber(final String noticeNumber) {
+	public void setNoticeNumber(final int noticeNumber) {
 		this.noticeNumber = noticeNumber;
 	}
 	// }}
@@ -55,6 +57,7 @@ public class CorrespondenceAbstract implements Correspondence {
 	// {{ Archived (property)
 	private boolean archived;
 
+	@Disabled
 	@MemberOrder(sequence = "3")
 	public boolean isArchived() {
 		return archived;
@@ -66,24 +69,25 @@ public class CorrespondenceAbstract implements Correspondence {
 	// }}
 
 	// {{ filters (programmatic)
-	public static Filter<Correspondence> filterArchivedAs(final boolean archived) {
-		return new Filter<Correspondence>(){
+	public static <T extends Correspondence> Filter<T> filterArchivedAs(final boolean archived) {
+		return new Filter<T>(){
 			@Override
-			public boolean accept(Correspondence t) {
+			public boolean accept(T t) {
 				return t.isArchived() == archived;
 			}};
 	}
 
-	public static Filter<Correspondence> filterCorrespondenceFor(
+	public static <T extends Correspondence> Filter<T> filterCorrespondenceFor(
 			final Customer customer) {
-		return new Filter<Correspondence>(){
+		return new Filter<T>(){
 			
 			@Override
-			public boolean accept(Correspondence t) {
-				return t.getCustomer() == customer;
+			public boolean accept(T t) {
+				return t.getCorrespondenceHistory().getCustomer() == customer;
 			}};
 	}
 	// }}
+
 
 
 }

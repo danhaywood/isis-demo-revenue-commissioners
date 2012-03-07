@@ -1,5 +1,6 @@
 package ie.revenue.isisdemo;
 
+import ie.revenue.isisdemo.corresp.CorrespondenceTypeFixture;
 import ie.revenue.isisdemo.taxrecord.TaxCreditTypeAndRatesFixture;
 import ie.revenue.isisdemo.taxrecord.TaxYearsFixture;
 
@@ -10,6 +11,7 @@ public class RefDataFixture extends AbstractFixture {
 	public RefDataFixture() {
 		addFixture(new TaxYearsFixture());
 		addFixture(new TaxCreditTypeAndRatesFixture());
+		addFixture(new CorrespondenceTypeFixture());
 	}
 	
 }

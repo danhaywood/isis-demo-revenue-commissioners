@@ -10,5 +10,5 @@ import org.apache.isis.applib.annotation.Named;
 @Named("Tax Records")
 public interface CustomerTaxRecords {
 
-	CustomerTaxRecord taxRecordFor(Customer customer);
+	CustomerTaxRecord forCustomer(Customer customer);
 }
