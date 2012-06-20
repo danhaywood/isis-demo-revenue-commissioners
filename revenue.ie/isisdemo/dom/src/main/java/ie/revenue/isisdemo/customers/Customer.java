@@ -28,6 +28,7 @@ public class Customer extends AbstractDomainObject {
 	// {{ Name (derived, maintained property)
 	private String name;
 
+	@Disabled
 	@Title(sequence = "2")
 	@MemberOrder(sequence = "2")
 	public String getName() {

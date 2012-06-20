@@ -43,7 +43,7 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 
 	@Disabled
 	@Title(sequence = "2")
-	@MemberOrder(sequence = "2")
+	@MemberOrder(sequence = "2.2")
 	public CustomerName getName() {
 		return name;
 	}
@@ -56,7 +56,7 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 	// {{ DateOfBirth (property)
 	private Date dateOfBirth;
 
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "2")
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -82,6 +82,7 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 	// {{ Address (property)
 	private Address address;
 
+	@Disabled
 	@MemberOrder(sequence = "3")
 	public Address getAddress() {
 		return address;
@@ -134,6 +135,13 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 	public void setEmailAddress(final String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+	
+	public String validateEmailAddress(final String emailAddress) {
+		if (emailAddress == null)
+			return null;
+		return emailAddress.contains("@")?null:"Must contain an @ symbol";
+	}
+	
 	// }}
 	
 	// {{ NumberDependentChildren (property)
@@ -153,6 +161,7 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 	// {{ GoPaperFree (property)
 	private boolean goPaperFree;
 
+	@Disabled
 	@MemberOrder(sequence = "8")
 	public boolean getGoPaperFree() {
 		return goPaperFree;
@@ -160,7 +169,20 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 
 	public void setGoPaperFree(final boolean goPaperFree) {
 		this.goPaperFree = goPaperFree;
+	}	
+	
+	// {{ toggleGoPaperFree (action)
+	@MemberOrder(sequence = "1")
+	public CustomerProfile toggleGoPaperFree() {
+		setGoPaperFree(! getGoPaperFree());
+		return this;
 	}
+	// }}
+
+
+
+
+	
 	// }}
 
 	// {{ programmatic helpers
@@ -169,6 +191,5 @@ public class CustomerProfile extends AbstractDomainObject implements ReferencesC
 		getCustomer().setName(newName);
 	}
 	// }}
-
 
 }

@@ -30,8 +30,8 @@
 
 		<div data-role="content">
             <br/>
-            <button>Tasks</button>
-            <ul data-role="listview" class="tasks"></ul>
+            <button>Customers</button>
+            <ul data-role="listview" class="customers"></ul>
 		</div>
 
         <script class="tmpl" type="text/x-jquery-tmpl">
@@ -42,7 +42,7 @@
         
         <script type="text/javascript">
             $("#home button").click(function(){
-                $.mobile.changePage("../services/toDoItems/actions/notYetDone/invoke", "pop")
+                $.mobile.changePage("../services/customers/actions/listAll/invoke", "pop")
             });
         </script>
 

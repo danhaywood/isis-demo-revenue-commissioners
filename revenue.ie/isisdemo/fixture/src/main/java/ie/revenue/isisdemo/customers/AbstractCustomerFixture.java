@@ -43,7 +43,7 @@ public abstract class AbstractCustomerFixture extends AbstractFixture {
 		getContainer().persist(customer);
 
 		createCustomerProfile(customer, customerTitle, firstName, surname,
-				dateOfBirth, emailAddress, emailAddress, emailAddress,
+				dateOfBirth, phoneNumber, mobileNumber, emailAddress,
 				language, numberOfDependentChildren, goPaperFree);
 		createCorrespondenceHistory(customer);
 		createTaxRecordAndCustomerTaxYears(customer);

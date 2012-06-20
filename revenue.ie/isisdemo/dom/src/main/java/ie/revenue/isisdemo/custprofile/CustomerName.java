@@ -3,6 +3,7 @@ package ie.revenue.isisdemo.custprofile;
 import org.apache.isis.applib.AbstractDomainObject;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
 
@@ -27,6 +28,7 @@ public class CustomerName extends AbstractDomainObject {
 	// {{ Surname (property)
 	private String surname;
 
+	@Named("Last Name")
 	@Title(sequence = "1", append = ", ")
 	@MemberOrder(sequence = "2")
 	public String getSurname() {
@@ -40,6 +42,8 @@ public class CustomerName extends AbstractDomainObject {
 
 	// }}
 
+	
+	
 	// {{ FirstName (property)
 	private String firstName;
 
@@ -56,6 +60,23 @@ public class CustomerName extends AbstractDomainObject {
 
 	// }}
 
+	// {{ MiddleInitial (property)
+	private String propertyName;
+
+	@Title(sequence="3", append=".")
+	@Optional
+	@MemberOrder(sequence = "4")
+	public String getMiddleInitial() {
+		return propertyName;
+	}
+
+	public void setMiddleInitial(final String propertyName) {
+		this.propertyName = propertyName;
+	}
+	// }}
+
+
+	
 	// {{ Profile (hidden property)
 	private CustomerProfile profile;
 
